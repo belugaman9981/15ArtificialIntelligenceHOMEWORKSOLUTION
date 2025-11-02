@@ -21,7 +21,7 @@ while True:
     fpsNew = 1 / loopTime
     fps = .9 * fps + .1 * fpsNew
 
-    
+    cv2.putText(frame, str(int(fps)),'fps:', (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 255), 2)
     cv2.imshow('My WEBcam', frame)
     cv2.moveWindow('My WEBcam', 0, 0)
     if cv2.waitKey(1) & 0xFF == ord('q'): 
