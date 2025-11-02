@@ -1,9 +1,11 @@
-import cv2
+import cv2, time
 
 cam = cv2.VideoCapture(0)
 cam.set(3, 640); cam.set(4, 360)
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+fps = 10
+timeStamp = time.time()
 
 while True:
     ignore, frame = cam.read()  
@@ -12,8 +14,12 @@ while True:
     
     for face in faces:
         x, y, w, h = face
-        print ('x:', x, 'y:', y, 'width:', w, 'height:', h)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        
+    loopTime = time.time() - timeStamp
+    timeStamp = time.time()
+    fpsNew = 1 / loopTime
+    fps = .9 * fps + .1 * fpsNew
 
     
     cv2.imshow('My WEBcam', frame)
