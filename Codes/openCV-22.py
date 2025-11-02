@@ -17,11 +17,14 @@ while True:
     
     for face in faces:
         x, y, w, h = face
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)       
+        frameROI = frame[y:y + h, x:x + w]
+        frameROIFGray = cv2.cvtColor(frameROI, cv2.COLOR_BGR2GRAY)
+        eyes = eyeCascade.detectMultiScale(frameROIFGray)
         
-    for eye in eyes:
-        x, y, w, h = eye
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        for eye in eyes:
+            xeye, yeye, weye, heye = eye
+            cv2.rectangle(frame[y:y + h, x:x + w], (xeye, yeye), (xeye + weye, yeye + heye), (255, 0, 0), 3)
 
     loopTime = time.time() - timeStamp
     timeStamp = time.time()
