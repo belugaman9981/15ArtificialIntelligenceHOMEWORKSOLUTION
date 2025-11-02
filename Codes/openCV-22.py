@@ -4,6 +4,8 @@ cam = cv2.VideoCapture(0)
 cam.set(3, 640); cam.set(4, 360)
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+eyeCascade  = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+
 fps = 10
 timeStamp = time.time()
 
@@ -11,11 +13,16 @@ while True:
     ignore, frame = cam.read()  
     frameGray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = list(faceCascade.detectMultiScale(frameGray, 1.3, 5))
+    eyes  = list(eyeCascade.detectMultiScale(frameGray, 1.3, 5))
     
     for face in faces:
         x, y, w, h = face
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
         
+    for eye in eyes:
+        x, y, w, h = eye
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+
     loopTime = time.time() - timeStamp
     timeStamp = time.time()
     fpsNew = 1 / loopTime
