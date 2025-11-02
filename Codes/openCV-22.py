@@ -13,7 +13,7 @@ while True:
     for face in faces:
         x, y, w, h = face
         print ('x:', x, 'y:', y, 'width:', w, 'height:', h)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
 
     
     cv2.imshow('My WEBcam', frame)
